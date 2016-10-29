@@ -1,12 +1,12 @@
-function googleSearch() {
+function pixabaySearch() {
   var request = $('.sought').val();
   var demand = $.ajax({
     url: "https://pixabay.com/api/?username=kushneruk_1995&key=3614464-520c9209e664f683faff11ff5&q=" + request + "&image_type=photo",
     success: function(data) {
-      function GoogleCallback(data) {
-        $('#container').empty();
+      function PixabayCallback(data) {
+        $('.container').empty();
         $.each(data.hits, function(i,hits) {
-          $("#container").prepend("<div class='item' style='width:" + hits.webformatWidth + "px; height:" + hits.webformatHeight + "px; background: url(" + hits.webformatURL + ");'><a href='" + hits.pageURL + "' class='link' target='_blank'><div class='overlay'><div class='overlay-user'><p>by "+ hits.user +"</p></div><div class='overlay-likes'><img src='img/like.png' class='overlay-like__img'><p>"+ hits.likes +"</p></div></div></a></div>");
+          $(".container").prepend("<div class='item' style='width:" + hits.webformatWidth + "px; height:" + hits.webformatHeight + "px; background: url(" + hits.webformatURL + ");'><a href='" + hits.pageURL + "' class='link' target='_blank'><div class='overlay'><div class='overlay-user'><p>by "+ hits.user +"</p></div><div class='overlay-likes'><img src='img/like.png' class='overlay-like__img'><p>"+ hits.likes +"</p></div></div></a></div>");
           if ( i == 20 ) return false;
         });
 
@@ -16,17 +16,15 @@ function googleSearch() {
           $(this).find('.overlay') .css('opacity', '0');
         })
 
-        if($(".container").masonry().length > -1) {
-          $(".container").masonry("destroy");
-        }
+        $(".container").masonry("destroy");
 
-        $("#container").masonry({
+        $(".container").masonry({
           itemSelector: '.item',
           isFitWidth: true,
         });   
       }
 
-      GoogleCallback(data);
+      PixabayCallback(data);
     }
   });
 }
